@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Radioactivity Explained</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" async></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Interactive Tabs */
+        .tabs-container {
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .tab-button {
+            padding: 1rem 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 500;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.3s ease;
+            color: #6b7280;
+        }
+        .tab-button.active {
+            color: #3B82F6;
+            font-weight: 600;
+        }
+        #tab-slider {
+            position: absolute;
+            bottom: -1px;
+            height: 2px;
+            background-color: #3B82F6;
+            transition: left 0.3s ease, width 0.3s ease;
+        }
+
+        .calculator-card { background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; margin-bottom: 1.5rem; }
+        .calculator-input { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; margin-top: 0.25rem; }
+        .calculator-button { background-color: #3B82F6; color: white; font-weight: 600; padding: 0.5rem 1rem; border-radius: 0.375rem; transition: background-color 0.2s; }
+        .calculator-button:hover { background-color: #2563EB; }
+        .calculator-result { margin-top: 1rem; font-weight: 600; font-size: 1.125rem; color: #1f2937; }
+        .equation { font-family: 'Times New Roman', Times, serif; font-size: 1.25rem; color: #374151; background-color: #f3f4f6; padding: 0.75rem; border-radius: 0.375rem; text-align: center; margin-top: 1rem; overflow-x: auto; }
+        .explanation { margin-top: 1.5rem; padding-left: 1rem; border-left: 4px solid #d1d5db; font-size: 0.95rem; color: #4b5563; }
+        .explanation-title { font-weight: 600; color: #1f2937; }
+
+        /* Animation Styles */
+        .nucleus-container { width: 100%; max-width: 400px; min-height: 280px; background-color: #e0f2fe; border-radius: 1rem; position: relative; margin: 1rem auto; overflow: hidden; border: 2px solid #3b82f6; }
+        .nucleon { position: absolute; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .proton { background-color: #ef4444; }
+        .neutron { background-color: #6b7280; }
+        .quark-container { width: 100px; height: 100px; position: absolute; }
+        .quark { position: absolute; width: 28px; height: 28px; border-radius: 50%; color: white; font-size: 0.7rem; display:flex; justify-content:center; align-items:center; font-weight: bold; }
+        .up-quark { background-color: #d946ef; }
+        .down-quark { background-color: #14b8a6; }
+        .pion { position: absolute; width: 12px; height: 12px; background: #facc15; border-radius: 50%; z-index: 10; }
+        .alpha-particle { position: absolute; width: 60px; height: 60px; z-index: 20; }
+        .beta-particle { position: absolute; width: 15px; height: 15px; background-color: #3b82f6; border-radius: 50%; z-index: 20; }
+        .gamma-ray { position: absolute; z-index: 20; font-size: 2rem; color: #8b5cf6; animation: radiate 1.5s ease-out forwards; }
+        @keyframes radiate { from { transform: scale(0.1); opacity: 1; } to { transform: scale(3); opacity: 0; } }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-600">Environmental Radioactivity</h1>
+            <p class="text-lg text-gray-600 mt-2">A comprehensive guide for students.</p>
+        </header>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <!-- Tabs Navigation -->
+            <div class="mb-6">
+                <nav id="tabs-nav" class="tabs-container" aria-label="Tabs">
+                    <button onclick="changeTab(this, 'introduction')" class="tab-button active">Introduction</button>
+                    <button onclick="changeTab(this, 'subatomic')" class="tab-button">Subatomic World</button>
+                    <button onclick="changeTab(this, 'decay_process')" class="tab-button">The Decay Process</button>
+                    <button onclick="changeTab(this, 'sources')" class="tab-button">Sources & Measurement</button>
+                    <button onclick="changeTab(this, 'health')" class="tab-button">Health Effects</button>
+                    <button onclick="changeTab(this, 'calculators')" class="tab-button">Calculators</button>
+                    <button onclick="changeTab(this, 'quiz')" class="tab-button">Quiz</button>
+                    <div id="tab-slider"></div>
+                </nav>
+            </div>
+
+            <!-- Tab Content -->
+            <div>
+                <div id="introduction" class="tab-content active">
+                    <h2 class="text-2xl font-bold mb-4">Inside the Atom's Core</h2>
+                     <p class="mb-4">Radioactivity originates from the nucleus, the dense center of an atom. Understanding its stability requires looking at the particles and forces within it.</p>
+                    
+                    <div class="bg-gray-100 p-4 rounded-lg mt-6">
+                        <h3 class="font-semibold text-xl mb-2">The Building Blocks: Atomic vs. Mass Number</h3>
+                        <p>An atom's identity is defined by two key numbers:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-2">
+                             <li><strong>Atomic Number (Z):</strong> The number of <strong>protons</strong>. This defines the element. Every carbon atom has 6 protons; if it had 7, it would be nitrogen.</li>
+                            <li><strong>Mass Number (A):</strong> The total number of <strong>protons and neutrons</strong> together.</li>
+                        </ul>
+                         <p class="mt-2"><strong>Isotopes</strong> are versions of an element with different numbers of neutrons. For example, stable Carbon-12 has 6 protons and 6 neutrons, while radioactive Carbon-14 has 6 protons and 8 neutrons.</p>
+                    </div>
+
+                    <div class="bg-indigo-50 p-6 rounded-lg mt-6">
+                        <h3 class="font-semibold text-xl mb-2">The Battle of Forces: What is the Strong Nuclear Force?</h3>
+                        <p>Two forces clash inside the nucleus:</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                            <li><strong>Electromagnetic Force:</strong> Makes protons repel each other with immense force.</li>
+                            <li><strong>Strong Nuclear Force:</strong> An incredibly powerful, short-range attractive force that binds protons and neutrons (collectively called nucleons) together.</li>
+                        </ul>
+                        <p class="mt-3 font-semibold">How is the Strong Force Generated?</p>
+                        <p>The Strong Force isn't a simple attraction. It arises from a continuous exchange of virtual particles called <strong>pions</strong> (a type of meson) between nucleons. Think of it like two people on ice skates throwing a boomerang back and forth. Protons and neutrons constantly exchange pions, creating a powerful binding field that overcomes the electromagnetic repulsion. This exchange is the fundamental mechanism that holds the nucleus together.</p>
+                        
+                        <div id="force-animation" class="nucleus-container"></div>
+                        <p class="text-center text-sm text-gray-600">Animation: Protons (red) repel, but exchanging pions (yellow) with neutrons (gray) generates the strong force, binding them.</p>
+                    </div>
+                </div>
+
+                 <div id="subatomic" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-4">Diving Deeper: The Subatomic World</h2>
+                    <p class="mb-4">Protons, neutrons, and electrons are part of a larger family of fundamental particles, organized by the Standard Model of particle physics.</p>
+                    
+                     <div class="bg-gray-100 p-6 rounded-lg mt-6">
+                        <h3 class="font-semibold text-xl mb-2">Understanding Quark Charges</h3>
+                        <p>Quarks possess a property called electric charge, but it's fractional, unlike the integer charges of protons (+1) and electrons (-1). This fractional charge is a fundamental property of the universe.</p>
+                        <ul class="list-disc list-inside mt-2 space-y-1">
+                           <li><strong>Up Quark (u):</strong> Carries a charge of <strong>+2/3</strong>.</li>
+                           <li><strong>Down Quark (d):</strong> Carries a charge of <strong>-1/3</strong>.</li>
+                        </ul>
+                        <p class="mt-2">These quarks are never found alone; they are always bound together in groups. The charges of the quarks within a particle simply add up to give the particle its total charge.</p>
+
+                        <div id="quark-charge-animation" class="nucleus-container flex flex-col md:flex-row justify-around items-center p-4"></div>
+                        <p class="text-center text-sm text-gray-600 -mt-2 mb-4">Animation: How quark charges combine to form protons and neutrons.</p>
+                    </div>
+
+
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Quarks: The Building Blocks</h3>
+                            <p>Protons and neutrons are made of three quarks each:</p>
+                            <p class="mt-2"><strong>Proton = u + u + d</strong><br>(Charge: +2/3 + 2/3 - 1/3 = +1)</p>
+                            <p><strong>Neutron = u + d + d</strong><br>(Charge: +2/3 - 1/3 - 1/3 = 0)</p>
+                        </div>
+
+                        <div class="bg-yellow-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Leptons: The Light Particles</h3>
+                            <p>This family includes particles that don't feel the strong force. The most famous are the <strong>electron (e⁻)</strong> and the tiny <strong>neutrino (ν)</strong>, which is produced in beta decay.</p>
+                        </div>
+
+                        <div class="bg-purple-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg mb-2">Bosons: The Force Carriers</h3>
+                            <p>Forces work by exchanging bosons:</p>
+                             <ul class="list-disc list-inside mt-2">
+                                <li><strong>Strong Force:</strong> Carried by <strong>gluons</strong> (binding quarks) and effectively by <strong>pions</strong> (binding nucleons).</li>
+                                <li><strong>Weak Force:</strong> Carried by <strong>W and Z bosons</strong>.</li>
+                                <li><strong>Electromagnetism:</strong> Carried by the <strong>photon (γ)</strong>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                 </div>
+
+
+                <div id="decay_process" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-4">The Decay Process Explained</h2>
+                    <p>When the balance of forces is wrong, a nucleus becomes unstable. It will undergo radioactive decay to reach a more stable, lower-energy state. Here's a deeper look at the mechanisms.</p>
+                    
+                    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                        <h3 class="font-semibold text-xl mb-2">Mechanism of Alpha (α) Decay</h3>
+                        <p>In very large nuclei, the short-range strong force struggles to hold the outer nucleons against the long-range repulsion of all the protons. While it seems impossible for particles to escape, they do via a quantum phenomenon called <strong>tunneling</strong>. An alpha particle (2 protons, 2 neutrons) borrows just enough energy from the nucleus for an incredibly brief moment to "tunnel" through the energy barrier holding it in, escaping the nucleus forever.</p>
+                        <div id="alpha-animation" class="nucleus-container"></div>
+                        <p class="text-center text-sm text-gray-600">Animation: An alpha particle "tunnels" through the energy barrier and escapes the large nucleus.</p>
+                    </div>
+
+                    <div class="bg-green-50 p-6 rounded-lg mb-6">
+                        <h3 class="font-semibold text-xl mb-2">Mechanism of Beta (β) Decay</h3>
+                        <p>Beta decay is governed by the <strong>Weak Nuclear Force</strong>. It happens in nuclei with an excess of neutrons. The weak force can change a particle's fundamental identity (its "flavor"). In this case, it changes a down quark inside a neutron into an up quark, transforming the neutron into a proton. To conserve charge and energy, this process instantly creates and ejects a high-energy electron (the beta particle) and an antineutrino.</p>
+                        <div id="beta-animation" class="nucleus-container"></div>
+                        <p class="text-center text-sm text-gray-600">Animation: A neutron transforms into a proton, emitting a beta particle (blue electron).</p>
+                    </div>
+
+                    <div class="bg-red-50 p-6 rounded-lg">
+                        <h3 class="font-semibold text-xl mb-2">Mechanism of Gamma (γ) Decay</h3>
+                        <p>After an alpha or beta decay, the new nucleus is often in an excited, high-energy arrangement. The nucleons rearrange themselves into a more stable, lower-energy configuration. This excess energy is released as a high-energy photon of light called a gamma ray. The nucleus doesn't change its identity; it simply "relaxes" to a more stable state.</p>
+                         <div id="gamma-animation" class="nucleus-container"></div>
+                         <p class="text-center text-sm text-gray-600">Animation: An excited nucleus releases a gamma ray to settle into a stable state.</p>
+                    </div>
+                </div>
+                
+                 <div id="sources" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-4">Sources & Measurement</h2>
+                    <p class="mb-4">We are constantly exposed to radiation from natural and artificial sources. Scientists use specific units and instruments to measure it.</p>
+                     <div class="grid md:grid-cols-2 gap-6">
+                        <div class="p-4 rounded-lg border">
+                             <h3 class="font-semibold text-lg mb-2 text-green-700">Natural Sources</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Cosmic Radiation:</strong> Particles from space.</li>
+                                <li><strong>Terrestrial Radiation:</strong> From radioactive elements in the Earth's crust.</li>
+                                <li><strong>Radon Gas:</strong> From the decay of uranium in soil.</li>
+                                <li><strong>Internal Radiation:</strong> From elements like Potassium-40 in our food.</li>
+                            </ul>
+                        </div>
+                         <div class="p-4 rounded-lg border">
+                            <h3 class="font-semibold text-lg mb-2 text-blue-700">Artificial Sources</h3>
+                            <ul class="list-disc list-inside space-y-2">
+                                <li><strong>Medical Procedures:</strong> X-rays and CT scans.</li>
+                                <li><strong>Nuclear Power & Accidents:</strong> Controlled and uncontrolled releases.</li>
+                                <li><strong>Consumer Products:</strong> e.g., some smoke detectors.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-yellow-50 p-4 rounded-lg md:col-span-2">
+                             <h3 class="font-semibold text-lg mb-2">Key Units of Measurement</h3>
+                            <p><strong>Becquerel (Bq):</strong> Measures activity (1 decay/second).</p>
+                            <p><strong>Gray (Gy):</strong> Measures absorbed dose (energy deposited).</p>
+                            <p><strong>Sievert (Sv):</strong> Measures dose equivalent (biological effect).</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="health" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-4">Health Effects & Dose Assessment</h2>
+                    <p class="mb-4">The health effects of radiation depend on the dose. Our bodies can repair damage from low doses, but high doses can be harmful. Scientists assess exposure through various methods.</p>
+                    <div class="space-y-4">
+                        <div class="p-4 border rounded-lg">
+                            <h3 class="font-semibold text-lg">Assessing Internal vs. External Exposure</h3>
+                            <p><strong>External Dose:</strong> Caused by radiation sources outside the body. It's assessed using dosimeters or by reconstructing the exposure scenario.</p>
+                            <p><strong>Internal Dose:</strong> Caused by radioactive materials that are inhaled, ingested, or enter through a wound. It is assessed using:</p>
+                            <ul class="list-disc list-inside ml-4 mt-2">
+                                <li><strong>In-Vivo Bioassay:</strong> Direct measurement of radiation inside the body using a whole-body counter.</li>
+                                <li><strong>In-Vitro Bioassay:</strong> Lab analysis of biological samples like urine or feces to measure excreted radioactivity.</li>
+                            </ul>
+                        </div>
+                         <div class="bg-red-50 p-4 rounded-lg">
+                            <h3 class="font-semibold text-lg">ALARA Principle</h3>
+                            <p>Radiation protection is guided by the <strong>ALARA</strong> principle: keeping all exposure <strong>A</strong>s <strong>L</strong>ow <strong>A</strong>s <strong>R</strong>easonably <strong>A</strong>chievable. This is done by minimizing <strong>Time</strong> near a source, maximizing <strong>Distance</strong> from it, and using appropriate <strong>Shielding</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="calculators" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-4">Radioactivity Calculators</h2>
+                    
+                    <div class="calculator-card">
+                        <h3 class="text-xl font-bold">Radioactive Decay Calculator</h3>
+                        <p class="text-sm text-gray-600 mb-4">Calculates the amount of a substance remaining after a certain time has passed.</p>
+                        <div class="equation">$$ N_t = N_0 \cdot \left(\frac{1}{2}\right)^{\frac{t}{T_{1/2}}} $$</div>
+                         <blockquote class="explanation space-y-3">
+                            <p><span class="explanation-title">\(N_0\) & \(N_t\):</span> Activity (in Bq).<br><strong>How it's measured:</strong> Using a <strong>Geiger counter</strong> or <strong>Gamma Spectrometer</strong>.</p>
+                             <p><span class="explanation-title">\(T_{1/2}\) (Half-Life):</span> Time.<br><strong>How it's determined:</strong> A constant property for each isotope, found in reference tables.</p>
+                             <p><span class="explanation-title">\(t\) (Time Elapsed):</span> Time.<br><strong>How it's measured:</strong> With a clock or timer.</p>
+                        </blockquote>
+                        <div class="grid md:grid-cols-3 gap-4 mt-4">
+                            <div><label for="initial-amount" class="font-medium">Initial Amount (N₀)</label><input type="number" id="initial-amount" class="calculator-input" placeholder="e.g., 100"></div>
+                            <div><label for="half-life" class="font-medium">Half-Life (T½)</label><input type="number" id="half-life" class="calculator-input" placeholder="e.g., 5730"></div>
+                            <div><label for="time-elapsed" class="font-medium">Time Elapsed (t)</label><input type="number" id="time-elapsed" class="calculator-input" placeholder="e.g., 1000"></div>
+                        </div>
+                        <button id="calculate-decay" class="calculator-button mt-4">Calculate Remaining Amount</button>
+                        <div id="decay-result" class="calculator-result"></div>
+                    </div>
+
+                    <div class="calculator-card">
+                        <h3 class="text-xl font-bold">Dose Equivalent Calculator</h3>
+                        <p class="text-sm text-gray-600 mb-4">Estimates the biological effect by converting the physical absorbed dose into a dose equivalent.</p>
+                        <div class="equation">$$ H = D \times Q $$</div>
+                        <blockquote class="explanation space-y-3">
+                            <p><span class="explanation-title">\(H\) (Dose Equivalent):</span> Biological effect (in Sv). This is a calculated value.</p>
+                            <p><span class="explanation-title">\(D\) (Absorbed Dose):</span> Energy absorbed (in Gy).<br><strong>How it's measured:</strong> Using instruments called <strong>dosimeters</strong>.</p>
+                            <p><span class="explanation-title">\(Q\) (Quality Factor):</span> Unitless damage potential.<br><strong>How it's determined:</strong> A standard value from biological research.</p>
+                        </blockquote>
+                        <div class="grid md:grid-cols-2 gap-4 mt-4">
+                            <div>
+                                <label for="absorbed-dose" class="font-medium">Absorbed Dose (D) in mGy</label>
+                                <input type="number" id="absorbed-dose" class="calculator-input" placeholder="e.g., 1">
+                            </div>
+                            <div>
+                                <label for="radiation-type" class="font-medium">Radiation Type (Q)</label>
+                                <select id="radiation-type" class="calculator-input">
+                                    <option value="1">X-rays, Gamma, Beta particles (Q=1)</option>
+                                    <option value="5">Neutrons &lt;10 keV (Q=5)</option>
+                                    <option value="10">Neutrons 10-100 keV (Q=10)</option>
+                                    <option value="20">Alpha particles, heavy ions (Q=20)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="calculate-dose" class="calculator-button mt-4">Calculate Dose Equivalent</button>
+                        <div id="dose-result" class="calculator-result"></div>
+                    </div>
+
+                </div>
+                 <div id="quiz" class="tab-content">
+                    <h2 class="text-2xl font-bold mb-4">Test Your Knowledge!</h2>
+                    <div id="quiz-container" class="space-y-6"></div>
+                    <button id="submit-quiz" class="mt-6 bg-blue-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 transition">Submit Answers</button>
+                    <div id="quiz-results" class="mt-4 text-lg font-semibold"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab-button');
+        const slider = document.getElementById('tab-slider');
+        const activeTab = document.querySelector('.tab-button.active');
+
+        function moveSlider(tab) {
+            slider.style.width = tab.offsetWidth + 'px';
+            slider.style.left = tab.offsetLeft + 'px';
+        }
+        
+        moveSlider(activeTab);
+
+        function changeTab(tab, tabID) {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            moveSlider(tab);
+
+            let tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) { tabContents[i].classList.remove("active"); }
+            document.getElementById(tabID).classList.add("active");
+            
+            // Trigger animations when their tab becomes active
+            if (tabID === 'introduction') createForceAnimation();
+            if (tabID === 'subatomic') createQuarkChargeAnimation();
+            if (tabID === 'decay_process') {
+                createAlphaAnimation(); createBetaAnimation(); createGammaAnimation();
+            }
+        }
+
+        // --- ANIMATION LOGIC ---
+        let animationIntervals = {};
+        function clearAnimation(name) {
+            if (animationIntervals[name]) {
+                clearInterval(animationIntervals[name]);
+                delete animationIntervals[name];
+            }
+        }
+        
+        function createForceAnimation() {
+            const container = document.getElementById('force-animation');
+            if(container.getAttribute('data-animated') === 'true') return;
+            container.innerHTML = '';
+            container.setAttribute('data-animated', 'true');
+            const particles = [
+                { type: 'proton', x: 150, y: 135 }, { type: 'proton', x: 210, y: 135 },
+                { type: 'neutron', x: 180, y: 100 }, { type: 'neutron', x: 180, y: 170 }
+            ];
+            particles.forEach(p => {
+                const el = document.createElement('div');
+                el.className = `nucleon ${p.type}`;
+                el.textContent = p.type === 'proton' ? 'p+' : 'n';
+                el.style.left = `${p.x}px`; el.style.top = `${p.y}px`;
+                container.appendChild(el);
+            });
+            clearAnimation('force');
+            animationIntervals.force = setInterval(() => {
+                if(!container.closest('.active')) return;
+                const pion = document.createElement('div');
+                pion.className = 'pion';
+                container.appendChild(pion);
+                pion.style.left = '160px'; pion.style.top = '145px';
+                pion.animate([ { left: '160px', top: '145px' }, { left: '190px', top: '110px' } ], { duration: 700, easing: 'ease-in-out' });
+                setTimeout(() => pion.remove(), 700);
+            }, 2000);
+        }
+
+        function createQuarkChargeAnimation() {
+            const container = document.getElementById('quark-charge-animation');
+             if(container.getAttribute('data-animated') === 'true') return;
+            container.setAttribute('data-animated', 'true');
+            container.innerHTML = `
+                <div class="relative w-1/2 h-full flex flex-col items-center justify-center p-2 text-center">
+                    <div class="nucleon proton mb-2">p+</div>
+                    <div class="relative w-[100px] h-[100px]">
+                        <div class="quark up-quark" style="top: 10px; left: 36px;">+²/₃</div>
+                        <div class="quark up-quark" style="top: 60px; left: 8px;">+²/₃</div>
+                        <div class="quark down-quark" style="top: 60px; left: 64px;">-¹/₃</div>
+                    </div>
+                    <div class="mt-2 font-bold text-lg text-red-600">Total: +1</div>
+                </div>
+                <div class="relative w-1/2 h-full flex flex-col items-center justify-center p-2 text-center">
+                    <div class="nucleon neutron mb-2">n</div>
+                    <div class="relative w-[100px] h-[100px]">
+                        <div class="quark up-quark" style="top: 10px; left: 36px;">+²/₃</div>
+                        <div class="quark down-quark" style="top: 60px; left: 8px;">-¹/₃</div>
+                        <div class="quark down-quark" style="top: 60px; left: 64px;">-¹/₃</div>
+                    </div>
+                    <div class="mt-2 font-bold text-lg text-gray-700">Total: 0</div>
+                </div>
+            `;
+        }
+
+
+        function createAlphaAnimation() {
+            const container = document.getElementById('alpha-animation');
+            if(container.getAttribute('data-animated') === 'true') return;
+            container.innerHTML = '';
+            container.setAttribute('data-animated', 'true');
+            for (let i = 0; i < 15; i++) {
+                const nucleon = document.createElement('div');
+                nucleon.className = `nucleon ${Math.random() > 0.5 ? 'proton' : 'neutron'}`;
+                nucleon.style.left = `${120 + Math.random() * 100}px`;
+                nucleon.style.top = `${80 + Math.random() * 100}px`;
+                container.appendChild(nucleon);
+            }
+            const alpha = document.createElement('div');
+            alpha.className = 'alpha-particle';
+            alpha.innerHTML = `<div class="nucleon proton" style="left:0;top:15px;">p+</div><div class="nucleon proton" style="left:30px;top:15px;">p+</div><div class="nucleon neutron" style="left:15px;top:0;">n</div><div class="nucleon neutron" style="left:15px;top:30px;">n</div>`;
+            alpha.style.left = '160px'; alpha.style.top = '120px';
+            container.appendChild(alpha);
+            alpha.animate([ { transform: 'translateX(0)', opacity: 1 }, { transform: 'translateX(200px)', opacity: 0.5 } ], { duration: 2500, delay: 500, easing: 'ease-in', fill:'forwards' });
+        }
+
+        function createBetaAnimation() {
+            const container = document.getElementById('beta-animation');
+            if(container.getAttribute('data-animated') === 'true') return;
+            container.innerHTML = '';
+            container.setAttribute('data-animated', 'true');
+            const particles = [ { type: 'proton', x: 160, y: 135 }, { type: 'neutron', x: 200, y: 135, isTarget: true } ];
+            particles.forEach(p => {
+                const el = document.createElement('div');
+                el.className = `nucleon ${p.type}`;
+                el.textContent = p.type === 'proton' ? 'p+' : 'n';
+                el.style.left = `${p.x}px`; el.style.top = `${p.y}px`;
+                container.appendChild(el);
+                if (p.isTarget) {
+                    setTimeout(() => {
+                        if(!el.closest('.active')) return;
+                        el.classList.remove('neutron'); el.classList.add('proton'); el.textContent = 'p+';
+                        const beta = document.createElement('div');
+                        beta.className = 'beta-particle';
+                        beta.style.left = `${p.x + 10}px`; beta.style.top = `${p.y + 10}px`;
+                        container.appendChild(beta);
+                        beta.animate([ { transform: 'translate(0, 0)', opacity: 1 }, { transform: 'translate(150px, -50px)', opacity: 0 } ], { duration: 1000, easing: 'ease-out' });
+                        setTimeout(() => beta.remove(), 1000);
+                    }, 1000);
+                }
+            });
+        }
+        
+        function createGammaAnimation() {
+            const container = document.getElementById('gamma-animation');
+            if(container.getAttribute('data-animated') === 'true') return;
+            container.innerHTML = '';
+             container.setAttribute('data-animated', 'true');
+            const p1 = document.createElement('div'); p1.className='nucleon proton'; p1.style.left='160px'; p1.style.top='150px'; p1.textContent='p+';
+            const n1 = document.createElement('div'); n1.className='nucleon neutron'; n1.style.left='180px'; n1.style.top='100px'; n1.textContent='n';
+            container.append(p1,n1);
+            const anim = p1.animate([{transform: 'translateY(0px)'}, {transform: 'translateY(-5px)'}, {transform: 'translateY(0px)'}], {duration: 300, iterations: Infinity});
+            setTimeout(() => {
+                if(!container.closest('.active')) return;
+                anim.cancel();
+                const gamma = document.createElement('div');
+                gamma.className = 'gamma-ray';
+                gamma.textContent = 'γ';
+                gamma.style.left = '185px'; gamma.style.top = '125px';
+                container.appendChild(gamma);
+                setTimeout(() => gamma.remove(), 1500);
+            }, 1200);
+        }
+
+        // Initial animation calls for first active tab
+        createForceAnimation();
+
+        // --- CALCULATOR & QUIZ LOGIC ---
+        document.getElementById('calculate-decay').addEventListener('click', () => {
+            const N0 = parseFloat(document.getElementById('initial-amount').value);
+            const T_half = parseFloat(document.getElementById('half-life').value);
+            const t = parseFloat(document.getElementById('time-elapsed').value);
+            const resultEl = document.getElementById('decay-result');
+            if (isNaN(N0) || isNaN(T_half) || isNaN(t) || T_half <= 0 || N0 < 0 || t < 0) {
+                resultEl.textContent = 'Please enter valid, positive numbers.'; return;
+            }
+            const Nt = N0 * Math.pow(0.5, t / T_half);
+            resultEl.textContent = `Remaining Amount (Nₜ): ${Nt.toPrecision(4)}`;
+        });
+        
+        document.getElementById('calculate-dose').addEventListener('click', () => {
+            const absorbedDose = parseFloat(document.getElementById('absorbed-dose').value);
+            const qualityFactor = parseFloat(document.getElementById('radiation-type').value);
+            const resultEl = document.getElementById('dose-result');
+            if (isNaN(absorbedDose) || isNaN(qualityFactor) || absorbedDose < 0) {
+                resultEl.textContent = 'Please enter a valid absorbed dose.'; return;
+            }
+            const doseEquivalent = absorbedDose * qualityFactor;
+            resultEl.textContent = `Dose Equivalent (H): ${doseEquivalent.toPrecision(3)} mSv`;
+        });
+
+        const quizData = [
+            { question: "A proton is made of which combination of quarks?", answers: ["u + d + d", "u + u + d", "u + u + u", "d + d + d"], correct: "u + u + d" },
+            { question: "The Strong Nuclear Force is effectively carried between nucleons by which particle?", answers: ["Electrons", "Pions", "Photons", "Neutrinos"], correct: "Pions" },
+            { question: "Which fundamental force is responsible for Beta Decay?", answers: ["Strong Force", "Electromagnetism", "Weak Force", "Gravity"], correct: "Weak Force" },
+            { question: "A nucleus of Uranium-238 (Z=92) undergoes alpha decay. What is the new Atomic Number (Z)?", answers: ["92", "90", "88", "94"], correct: "90" },
+            { question: "Which of these is a truly fundamental particle (a lepton)?", answers: ["Proton", "Neutron", "Electron", "Pion"], correct: "Electron" },
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const submitButton = document.getElementById('submit-quiz');
+        const resultsContainer = document.getElementById('quiz-results');
+
+        function buildQuiz() {
+            const output = [];
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const answers = [];
+                for (let letter in currentQuestion.answers) {
+                    answers.push(
+                        `<label class="block mt-2 cursor-pointer p-2 rounded-md hover:bg-gray-200"><input type="radio" name="question${questionNumber}" value="${currentQuestion.answers[letter]}" class="mr-2"> ${currentQuestion.answers[letter]}</label>`
+                    );
+                }
+                output.push(
+                    `<div class="question bg-gray-100 p-4 rounded-lg"><p class="font-semibold">${questionNumber + 1}. ${currentQuestion.question}</p><div class="answers mt-2">${answers.join('')}</div></div>`
+                );
+            });
+            quizContainer.innerHTML = output.join('');
+        }
+
+        function showResults() {
+            const answerContainers = quizContainer.querySelectorAll('.answers');
+            let numCorrect = 0;
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const answerContainer = answerContainers[questionNumber];
+                const selector = `input[name=question${questionNumber}]:checked`;
+                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+                const parentQuestionDiv = answerContainer.parentElement;
+                parentQuestionDiv.style.border = '1px solid #e5e7eb';
+                if (userAnswer === currentQuestion.correct) {
+                    numCorrect++;
+                    parentQuestionDiv.style.border = '2px solid #10B981';
+                } else {
+                     parentQuestionDiv.style.border = '2px solid #EF4444';
+                }
+            });
+            resultsContainer.innerHTML = `You got ${numCorrect} out of ${quizData.length} correct!`;
+             if (numCorrect === quizData.length) {
+                resultsContainer.innerHTML += " Excellent work!";
+                resultsContainer.style.color = '#10B981';
+            } else {
+                 resultsContainer.style.color = '#EF4444';
+            }
+        }
+
+        buildQuiz();
+        submitButton.addEventListener('click', showResults);
+    </script>
+</body>
+</html>
