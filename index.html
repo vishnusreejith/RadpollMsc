@@ -65,8 +65,7 @@
         .pion { position: absolute; width: 12px; height: 12px; background: #facc15; border-radius: 50%; z-index: 10; }
         .alpha-particle { position: absolute; width: 60px; height: 60px; z-index: 20; }
         .beta-particle { position: absolute; width: 15px; height: 15px; background-color: #3b82f6; border-radius: 50%; z-index: 20; }
-        .gamma-ray { position: absolute; z-index: 20; font-size: 2rem; color: #8b5cf6; animation: radiate 1.5s ease-out forwards; }
-        @keyframes radiate { from { transform: scale(0.1); opacity: 1; } to { transform: scale(3); opacity: 0; } }
+        .gamma-ray { position: absolute; z-index: 20; font-size: 2rem; color: #8b5cf6; }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -189,7 +188,7 @@
                         <h3 class="font-semibold text-xl mb-2">Mechanism of Gamma (γ) Decay</h3>
                         <p>After an alpha or beta decay, the new nucleus is often in an excited, high-energy arrangement. The nucleons rearrange themselves into a more stable, lower-energy configuration. This excess energy is released as a high-energy photon of light called a gamma ray. The nucleus doesn't change its identity; it simply "relaxes" to a more stable state.</p>
                          <div id="gamma-animation" class="nucleus-container"></div>
-                         <p class="text-center text-sm text-gray-600">Animation: An excited nucleus releases a gamma ray to settle into a stable state.</p>
+                         <p class="text-center text-sm text-gray-600">Animation: An excited nucleus releases gamma rays to settle into a stable state.</p>
                     </div>
                 </div>
                 
@@ -250,10 +249,11 @@
                         <h3 class="text-xl font-bold">Radioactive Decay Calculator</h3>
                         <p class="text-sm text-gray-600 mb-4">Calculates the amount of a substance remaining after a certain time has passed.</p>
                         <div class="equation">$$ N_t = N_0 \cdot \left(\frac{1}{2}\right)^{\frac{t}{T_{1/2}}} $$</div>
-                         <blockquote class="explanation space-y-3">
-                            <p><span class="explanation-title">\(N_0\) & \(N_t\):</span> Activity (in Bq).<br><strong>How it's measured:</strong> Using a <strong>Geiger counter</strong> or <strong>Gamma Spectrometer</strong>.</p>
-                             <p><span class="explanation-title">\(T_{1/2}\) (Half-Life):</span> Time.<br><strong>How it's determined:</strong> A constant property for each isotope, found in reference tables.</p>
-                             <p><span class="explanation-title">\(t\) (Time Elapsed):</span> Time.<br><strong>How it's measured:</strong> With a clock or timer.</p>
+                        <blockquote class="explanation space-y-3">
+                            <div><span class="explanation-title">\(N_t\) (Remaining Amount):</span> The activity of the substance after time \(t\). Unit: Becquerels (Bq). <br><strong>How it's measured:</strong> Using a <strong>Geiger counter</strong> or <strong>Gamma Spectrometer</strong>.</div>
+                            <div><span class="explanation-title">\(N_0\) (Initial Amount):</span> The activity at the start (t=0). Unit: Becquerels (Bq). <br><strong>How it's measured:</strong> Same as \(N_t\).</div>
+                            <div><span class="explanation-title">\(t\) (Time Elapsed):</span> The duration of decay. Units: seconds, years, etc. <br><strong>How it's measured:</strong> With a clock or timer.</div>
+                            <div><span class="explanation-title">\(T_{1/2}\) (Half-Life):</span> The time for half the substance to decay. Units: same as \(t\). <br><strong>How it's determined:</strong> A known constant for each isotope, found in reference tables.</div>
                         </blockquote>
                         <div class="grid md:grid-cols-3 gap-4 mt-4">
                             <div><label for="initial-amount" class="font-medium">Initial Amount (N₀)</label><input type="number" id="initial-amount" class="calculator-input" placeholder="e.g., 100"></div>
@@ -265,13 +265,32 @@
                     </div>
 
                     <div class="calculator-card">
+                        <h3 class="text-xl font-bold">Half-Life Calculator</h3>
+                        <p class="text-sm text-gray-600 mb-4">Calculates the half-life of a substance based on its decay over a period of time.</p>
+                        <div class="equation">$$ T_{1/2} = \frac{t \cdot \ln(2)}{\ln(N_0 / N_t)} $$</div>
+                         <blockquote class="explanation space-y-3">
+                            <div><span class="explanation-title">\(T_{1/2}\) (Half-Life):</span> The time for half the substance to decay. This is the calculated value.</div>
+                            <div><span class="explanation-title">\(t\) (Time Elapsed):</span> The duration over which the decay was measured. <br><strong>How it's measured:</strong> With a clock or timer.</div>
+                             <div><span class="explanation-title">\(N_0\) (Initial Amount):</span> The activity measured at the start of the time period. <br><strong>How it's measured:</strong> Using a <strong>Geiger counter</strong> or similar detector.</div>
+                            <div><span class="explanation-title">\(N_t\) (Remaining Amount):</span> The activity measured at the end of the time period. <br><strong>How it's measured:</strong> Using the same detector as \(N_0\).</div>
+                        </blockquote>
+                        <div class="grid md:grid-cols-3 gap-4 mt-4">
+                            <div><label for="hl-initial" class="font-medium">Initial Amount (N₀)</label><input type="number" id="hl-initial" class="calculator-input" placeholder="e.g., 1000"></div>
+                            <div><label for="hl-remaining" class="font-medium">Remaining Amount (Nₜ)</label><input type="number" id="hl-remaining" class="calculator-input" placeholder="e.g., 886"></div>
+                            <div><label for="hl-time" class="font-medium">Time Elapsed (t)</label><input type="number" id="hl-time" class="calculator-input" placeholder="e.g., 1000"></div>
+                        </div>
+                        <button id="calculate-half-life" class="calculator-button mt-4">Calculate Half-Life</button>
+                        <div id="half-life-result" class="calculator-result"></div>
+                    </div>
+
+                    <div class="calculator-card">
                         <h3 class="text-xl font-bold">Dose Equivalent Calculator</h3>
                         <p class="text-sm text-gray-600 mb-4">Estimates the biological effect by converting the physical absorbed dose into a dose equivalent.</p>
                         <div class="equation">$$ H = D \times Q $$</div>
                         <blockquote class="explanation space-y-3">
-                            <p><span class="explanation-title">\(H\) (Dose Equivalent):</span> Biological effect (in Sv). This is a calculated value.</p>
-                            <p><span class="explanation-title">\(D\) (Absorbed Dose):</span> Energy absorbed (in Gy).<br><strong>How it's measured:</strong> Using instruments called <strong>dosimeters</strong>.</p>
-                            <p><span class="explanation-title">\(Q\) (Quality Factor):</span> Unitless damage potential.<br><strong>How it's determined:</strong> A standard value from biological research.</p>
+                            <div><span class="explanation-title">\(H\) (Dose Equivalent):</span> A measure of the biological effect of radiation. Unit: Sieverts (Sv). <br><strong>How it's determined:</strong> This is a calculated value, not measured directly.</div>
+                            <div><span class="explanation-title">\(D\) (Absorbed Dose):</span> The energy absorbed per unit mass. Unit: Grays (Gy). <br><strong>How it's measured:</strong> Using instruments called <strong>dosimeters</strong> (e.g., TLD badges).</div>
+                            <div><span class="explanation-title">\(Q\) (Quality Factor):</span> A factor for the damage potential of the radiation type. Unitless. <br><strong>How it's determined:</strong> A standard value from biological research, found in reference tables.</div>
                         </blockquote>
                         <div class="grid md:grid-cols-2 gap-4 mt-4">
                             <div>
@@ -335,6 +354,34 @@
 
         // --- ANIMATION LOGIC ---
         let animationIntervals = {};
+
+        function addAtomOrbits(container) {
+            const orbit1 = document.createElement('div');
+            orbit1.style.position = 'absolute';
+            orbit1.style.top = '50%';
+            orbit1.style.left = '50%';
+            orbit1.style.width = '300px';
+            orbit1.style.height = '120px';
+            orbit1.style.border = '2px solid rgba(147, 197, 253, 0.6)';
+            orbit1.style.borderRadius = '50%';
+            orbit1.style.transform = 'translate(-50%, -50%) rotate(25deg)';
+            orbit1.style.zIndex = '1';
+
+            const orbit2 = document.createElement('div');
+            orbit2.style.position = 'absolute';
+            orbit2.style.top = '50%';
+            orbit2.style.left = '50%';
+            orbit2.style.width = '360px';
+            orbit2.style.height = '180px';
+            orbit2.style.border = '2px solid rgba(147, 197, 253, 0.6)';
+            orbit2.style.borderRadius = '50%';
+            orbit2.style.transform = 'translate(-50%, -50%) rotate(-35deg)';
+            orbit2.style.zIndex = '1';
+            
+            container.appendChild(orbit1);
+            container.appendChild(orbit2);
+        }
+
         function clearAnimation(name) {
             if (animationIntervals[name]) {
                 clearInterval(animationIntervals[name]);
@@ -399,22 +446,60 @@
 
         function createAlphaAnimation() {
             const container = document.getElementById('alpha-animation');
-            if(container.getAttribute('data-animated') === 'true') return;
+            if (container.getAttribute('data-animated') === 'true') return;
             container.innerHTML = '';
             container.setAttribute('data-animated', 'true');
+
+            addAtomOrbits(container); // Add orbits in the background
+
+            const nucleus = document.createElement('div');
+            nucleus.style.position = 'relative';
+            nucleus.style.width = '200px';
+            nucleus.style.height = '200px';
+            nucleus.style.left = '100px';
+            nucleus.style.top = '40px';
+            nucleus.style.zIndex = '10'; // Ensure nucleus is above orbits
+            container.appendChild(nucleus);
+
             for (let i = 0; i < 15; i++) {
                 const nucleon = document.createElement('div');
                 nucleon.className = `nucleon ${Math.random() > 0.5 ? 'proton' : 'neutron'}`;
-                nucleon.style.left = `${120 + Math.random() * 100}px`;
-                nucleon.style.top = `${80 + Math.random() * 100}px`;
-                container.appendChild(nucleon);
+                nucleon.style.left = `${50 + Math.random() * 100}px`;
+                nucleon.style.top = `${50 + Math.random() * 100}px`;
+                nucleus.appendChild(nucleon);
             }
             const alpha = document.createElement('div');
             alpha.className = 'alpha-particle';
             alpha.innerHTML = `<div class="nucleon proton" style="left:0;top:15px;">p+</div><div class="nucleon proton" style="left:30px;top:15px;">p+</div><div class="nucleon neutron" style="left:15px;top:0;">n</div><div class="nucleon neutron" style="left:15px;top:30px;">n</div>`;
-            alpha.style.left = '160px'; alpha.style.top = '120px';
-            container.appendChild(alpha);
-            alpha.animate([ { transform: 'translateX(0)', opacity: 1 }, { transform: 'translateX(200px)', opacity: 0.5 } ], { duration: 2500, delay: 500, easing: 'ease-in', fill:'forwards' });
+            alpha.style.left = '80px';
+            alpha.style.top = '80px';
+            nucleus.appendChild(alpha);
+
+            const arrow = document.createElement('div');
+            arrow.textContent = '→';
+            arrow.style.position = 'absolute';
+            arrow.style.fontSize = '40px';
+            arrow.style.color = '#ef4444';
+            arrow.style.opacity = '0';
+            arrow.style.zIndex = '19';
+            arrow.style.left = '145px';
+            arrow.style.top = '85px';
+            nucleus.appendChild(arrow);
+
+            setTimeout(() => {
+                if (!container.closest('.active')) return;
+                const path = [{ transform: 'translate(0, 0)' }, { transform: 'translate(220px, -30px)' }];
+                alpha.animate(path, { duration: 2000, easing: 'ease-out', fill: 'forwards' });
+                arrow.animate([
+                    { transform: 'translate(0, 0)', opacity: 1 },
+                    { transform: 'translate(220px, -30px)', opacity: 0 }
+                ], { duration: 2000, easing: 'ease-out', fill: 'forwards' });
+                nucleus.animate([
+                    { transform: 'translateX(0px)' },
+                    { transform: 'translateX(-10px)' },
+                    { transform: 'translateX(0px)' }
+                ], { duration: 500, easing: 'ease-in-out' });
+            }, 500);
         }
 
         function createBetaAnimation() {
@@ -422,23 +507,66 @@
             if(container.getAttribute('data-animated') === 'true') return;
             container.innerHTML = '';
             container.setAttribute('data-animated', 'true');
+            
+            addAtomOrbits(container);
+
+            const nucleus = document.createElement('div');
+            nucleus.style.position = 'absolute';
+            nucleus.style.width = '100%';
+            nucleus.style.height = '100%';
+            nucleus.style.zIndex = '10';
+            container.appendChild(nucleus);
+
             const particles = [ { type: 'proton', x: 160, y: 135 }, { type: 'neutron', x: 200, y: 135, isTarget: true } ];
             particles.forEach(p => {
                 const el = document.createElement('div');
                 el.className = `nucleon ${p.type}`;
                 el.textContent = p.type === 'proton' ? 'p+' : 'n';
                 el.style.left = `${p.x}px`; el.style.top = `${p.y}px`;
-                container.appendChild(el);
+                nucleus.appendChild(el);
+
                 if (p.isTarget) {
                     setTimeout(() => {
                         if(!el.closest('.active')) return;
+
+                        const flash = document.createElement('div');
+                        flash.style.position = 'absolute';
+                        flash.style.left = `${p.x}px`; flash.style.top = `${p.y}px`;
+                        flash.style.width = '30px'; flash.style.height = '30px';
+                        flash.style.borderRadius = '50%';
+                        flash.style.backgroundColor = '#facc15';
+                        flash.style.zIndex = '21';
+                        nucleus.appendChild(flash);
+                        flash.animate([
+                            { transform: 'scale(1)', opacity: 0.8 },
+                            { transform: 'scale(2.5)', opacity: 0 }
+                        ], { duration: 400, easing: 'ease-out'});
+                        setTimeout(() => flash.remove(), 400);
+
                         el.classList.remove('neutron'); el.classList.add('proton'); el.textContent = 'p+';
+                        
                         const beta = document.createElement('div');
-                        beta.className = 'beta-particle';
+                        beta.className = 'beta-particle flex justify-center items-center text-xs font-bold';
+                        beta.textContent = 'e⁻';
                         beta.style.left = `${p.x + 10}px`; beta.style.top = `${p.y + 10}px`;
-                        container.appendChild(beta);
-                        beta.animate([ { transform: 'translate(0, 0)', opacity: 1 }, { transform: 'translate(150px, -50px)', opacity: 0 } ], { duration: 1000, easing: 'ease-out' });
-                        setTimeout(() => beta.remove(), 1000);
+                        nucleus.appendChild(beta);
+
+                        const arrow = document.createElement('div');
+                        arrow.innerHTML = '→';
+                        arrow.style.position = 'absolute';
+                        arrow.style.fontSize = '25px';
+                        arrow.style.color = '#3b82f6';
+                        arrow.style.opacity = '0.8';
+                        arrow.style.zIndex = '19';
+                        arrow.style.left = `${p.x + 30}px`;
+                        arrow.style.top = `${p.y + 2}px`;
+                        nucleus.appendChild(arrow);
+                        
+                        const animationPath = [ { transform: 'translate(0, 0)', opacity: 1 }, { transform: 'translate(180px, -70px)', opacity: 0 } ];
+                        beta.animate(animationPath, { duration: 1200, easing: 'ease-out', fill: 'forwards' });
+                        arrow.animate(animationPath, { duration: 1200, easing: 'ease-out', fill: 'forwards' });
+
+                        setTimeout(() => { beta.remove(); arrow.remove(); }, 1200);
                     }, 1000);
                 }
             });
@@ -446,23 +574,73 @@
         
         function createGammaAnimation() {
             const container = document.getElementById('gamma-animation');
-            if(container.getAttribute('data-animated') === 'true') return;
+            if (container.getAttribute('data-animated') === 'true') return;
             container.innerHTML = '';
-             container.setAttribute('data-animated', 'true');
-            const p1 = document.createElement('div'); p1.className='nucleon proton'; p1.style.left='160px'; p1.style.top='150px'; p1.textContent='p+';
-            const n1 = document.createElement('div'); n1.className='nucleon neutron'; n1.style.left='180px'; n1.style.top='100px'; n1.textContent='n';
-            container.append(p1,n1);
-            const anim = p1.animate([{transform: 'translateY(0px)'}, {transform: 'translateY(-5px)'}, {transform: 'translateY(0px)'}], {duration: 300, iterations: Infinity});
+            container.setAttribute('data-animated', 'true');
+            
+            addAtomOrbits(container);
+
+            const nucleusWrapper = document.createElement('div');
+            nucleusWrapper.style.position = 'absolute';
+            nucleusWrapper.style.left = '150px';
+            nucleusWrapper.style.top = '90px';
+            nucleusWrapper.style.width = '100px';
+            nucleusWrapper.style.height = '100px';
+            nucleusWrapper.style.zIndex = '10';
+            container.appendChild(nucleusWrapper);
+
+            // Add a glow effect for the excited state
+            const glow = document.createElement('div');
+            glow.style.position = 'absolute';
+            glow.style.width = '100%';
+            glow.style.height = '100%';
+            glow.style.borderRadius = '50%';
+            glow.style.backgroundColor = '#fef08a'; // yellow glow
+            glow.style.zIndex = '0';
+            nucleusWrapper.appendChild(glow);
+
+            const p1 = document.createElement('div'); p1.className='nucleon proton'; p1.style.left='35px'; p1.style.top='55px'; p1.textContent='p+';
+            const n1 = document.createElement('div'); n1.className='nucleon neutron'; n1.style.left='55px'; n1.style.top='25px'; n1.textContent='n';
+            nucleusWrapper.append(p1, n1);
+
+            // Animate the glow to show it's excited
+            const glowAnim = glow.animate([
+                { transform: 'scale(1.2)', opacity: 0.5 },
+                { transform: 'scale(1.4)', opacity: 0.7 },
+                { transform: 'scale(1.2)', opacity: 0.5 }
+            ], { duration: 600, iterations: Infinity });
+
             setTimeout(() => {
-                if(!container.closest('.active')) return;
-                anim.cancel();
-                const gamma = document.createElement('div');
-                gamma.className = 'gamma-ray';
-                gamma.textContent = 'γ';
-                gamma.style.left = '185px'; gamma.style.top = '125px';
-                container.appendChild(gamma);
-                setTimeout(() => gamma.remove(), 1500);
-            }, 1200);
+                if (!container.closest('.active')) return;
+                glowAnim.cancel();
+                glow.animate([{ opacity: 0.7 }, { opacity: 0 }], { duration: 500, fill: 'forwards' });
+                setTimeout(() => glow.remove(), 500);
+
+                // Create radiating gamma rays
+                for (let i = 0; i < 6; i++) {
+                    const gammaRay = document.createElement('div');
+                    gammaRay.textContent = 'γ';
+                    gammaRay.className = 'gamma-ray';
+                    gammaRay.style.position = 'absolute';
+                    // Position in the center of the nucleus wrapper
+                    gammaRay.style.left = '40px'; 
+                    gammaRay.style.top = '30px';
+                    gammaRay.style.transformOrigin = 'center';
+                    
+                    const angle = i * 60;
+                    gammaRay.animate([
+                        { transform: `rotate(${angle}deg) translateX(20px) scale(0.5)`, opacity: 1 },
+                        { transform: `rotate(${angle}deg) translateX(150px) scale(1)`, opacity: 0 }
+                    ], { 
+                        duration: 1200, 
+                        easing: 'ease-out',
+                        delay: Math.random() * 200 // stagger the emission slightly
+                    });
+
+                    nucleusWrapper.appendChild(gammaRay);
+                    setTimeout(() => gammaRay.remove(), 1400);
+                }
+            }, 1800);
         }
 
         // Initial animation calls for first active tab
@@ -481,6 +659,21 @@
             resultEl.textContent = `Remaining Amount (Nₜ): ${Nt.toPrecision(4)}`;
         });
         
+        document.getElementById('calculate-half-life').addEventListener('click', () => {
+            const N0 = parseFloat(document.getElementById('hl-initial').value);
+            const Nt = parseFloat(document.getElementById('hl-remaining').value);
+            const t = parseFloat(document.getElementById('hl-time').value);
+            const resultEl = document.getElementById('half-life-result');
+
+            if (isNaN(N0) || isNaN(Nt) || isNaN(t) || N0 <= 0 || Nt <= 0 || t <= 0 || Nt >= N0) {
+                resultEl.textContent = 'Please enter valid numbers. N₀ must be greater than Nₜ.';
+                return;
+            }
+
+            const T_half = (t * Math.log(2)) / Math.log(N0 / Nt);
+            resultEl.textContent = `Calculated Half-Life (T½): ${T_half.toPrecision(5)}`;
+        });
+
         document.getElementById('calculate-dose').addEventListener('click', () => {
             const absorbedDose = parseFloat(document.getElementById('absorbed-dose').value);
             const qualityFactor = parseFloat(document.getElementById('radiation-type').value);
